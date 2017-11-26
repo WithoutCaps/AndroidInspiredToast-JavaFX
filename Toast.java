@@ -1,3 +1,4 @@
+package sample;
 
 import javafx.animation.PauseTransition;
 import javafx.beans.property.SimpleBooleanProperty;
@@ -15,28 +16,27 @@ import javafx.util.Duration;
 
 public class Toast {
     private static final Duration DURATION = Duration.millis(2000);
-    private static Tooltip mToast;
-    private static Label mLabel;
-    private static PauseTransition mTimer;
-    private static Stage mStage;
+    private static Tooltip toast;
+    private static Label label;
+    private static PauseTransition timer;
+    private static Stage stage;
 
-    public static Tooltip JToast(String content) {
-        mToast = new Tooltip();
+    private static void JToast(String content) {
+        toast = new Tooltip();
 
-        mLabel = new Label(content);
-        mLabel.setStyle("-fx-text-fill:#FFF ; -fx-font: 17px Tahoma;");
+        label = new Label(content);
+        label.setStyle("-fx-text-fill:#FFF ; -fx-font: 17px Tahoma;");
 
         HBox rootLayout = new HBox();
         rootLayout.setPadding(new Insets(15));
         rootLayout.setSpacing(10);
-        rootLayout.getChildren().addAll(mLabel);
+        rootLayout.getChildren().addAll(label);
 
-        mToast.setGraphic(new Group(rootLayout));
-        mToast.show(mStage, 0, 0);
-        mToast.centerOnScreen();
+        toast.setGraphic(new Group(rootLayout));
+        toast.show(stage, 0, 0);
+        toast.centerOnScreen();
 
-        mTimer = hoverSupport(mToast, rootLayout);
-        return mToast;
+        timer = hoverSupport(toast, rootLayout);
     }
 
     private static PauseTransition hoverSupport(Window window, Region hoverRegion) {
@@ -47,7 +47,7 @@ public class Toast {
         PauseTransition hoverTimer = new PauseTransition(DURATION);
         hoverTimer.setOnFinished((e) -> {
             if (HoveProperty.get())
-                mTimer.play();
+                timer.play();
             else
                 window.hide();
         });
@@ -57,15 +57,15 @@ public class Toast {
     }
 
     public static void makeText(Stage stage, String txt) {
-        mStage = stage;
-        if (mToast != null) {
-            mLabel.setText(txt);
+        Toast.stage = stage;
+        if (toast != null) {
+            label.setText(txt);
 
-            if (mToast.isShowing()) {
-                mTimer.playFromStart();
+            if (toast.isShowing()) {
+                timer.playFromStart();
             } else {
-                mToast.show(mStage);
-                mTimer.play();
+                toast.show(Toast.stage);
+                timer.play();
             }
         } else
             JToast(txt);
