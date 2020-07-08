@@ -1,2 +1,2 @@
-# Android Inspired JavaFX "Toast" 
-Really simple class which creates something similar to android "Toast"
+# ARCHIVED. Android Inspired JavaFX "Toast" 
+Really simple class which creates something similar to android "Toast" in JavaFX.
